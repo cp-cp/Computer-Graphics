@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/HelloGL.dir/src/glad.c.o CMakeFiles/HelloGL.dir/src/main.cpp.o -o HelloGL  -Wl,-rpath,/Users/cp_cp/GitHub/OpenGL/lib /Users/cp_cp/GitHub/OpenGL/lib/libglfw.3.dylib -framework OpenGL
