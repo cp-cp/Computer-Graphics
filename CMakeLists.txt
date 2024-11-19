@@ -12,9 +12,14 @@ set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include/)
 set(LIB_DIR ${PROJECT_SOURCE_DIR}/lib/)
 include_directories(${HEADER_DIR} ${LIB_DIR})
 
-# 添加目标链接
-set(GLFW_LINK ${LIB_DIR}libglfw.3.dylib)
-link_libraries(${GLFW_LINK})
+# 查找 GLFW
+find_package(glfw3 REQUIRED)
+
+# 查找 GLM
+find_package(glm REQUIRED)
+
+# 查找 Assimp
+find_package(ASSIMP REQUIRED)
 
 # 执行编译命令
 set(SOURCES ${SRC_DIR}glad.c ${SRC_DIR}main.cpp)
@@ -24,6 +29,9 @@ add_executable(HelloGL ${SOURCES})
 if (APPLE)
     target_link_libraries(HelloGL "-framework OpenGL")
 endif()
+
+# 链接 GLFW, GLM 和 Assimp
+target_link_libraries(HelloGL glfw ${GLM_LIBRARIES} ${ASSIMP_LIBRARIES})
 
 include(CTest)
 enable_testing()
