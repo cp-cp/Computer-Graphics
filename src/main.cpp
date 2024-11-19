@@ -89,11 +89,18 @@ int main()
         processInput(window);
 
         // 清空屏幕
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // 设置背景为白色
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // 使用着色器
         shader.use();
+
+        // 设置光源属性
+        glm::vec3 lightPos(100.0f, 100.0f, 100.0f); // 添加光源位置
+        shader.setVec3("lightPos", lightPos.x, lightPos.y, lightPos.z);   // 光源位置
+        shader.setVec3("viewPos", cameraPos.x, cameraPos.y, cameraPos.z); // 观察者位置
+        shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);                   // 光源颜色
+        shader.setVec3("objectColor", 1.0f, 0.5f, 0.2f); // 物体颜色
 
         // 模型矩阵
         glm::mat4 modelMat = glm::mat4(1.0f);
@@ -110,7 +117,7 @@ int main()
         shader.setMat4("projection", projection);
 
         // 在渲染循环中设置模型颜色
-        shader.setVec3("objectColor", 1.0f, 0.5f, 0.2f); // 设置为橙色
+        // shader.setVec3("objectColor", 1.0f, 0.5f, 0.2f); // 设置为橙色
 
         // 绘制立方体
         model.draw(shader);

@@ -45,6 +45,5 @@ void Model::loadModel(const std::string &filepath)
 void Model::draw(const Shader &shader)
 {
     // 绑定顶点数组对象并绘制
-
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 }

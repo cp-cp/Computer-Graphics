@@ -3,7 +3,6 @@ out vec4 FragColor;
 
 in vec3 FragPos;
 in vec3 Normal;
-in vec2 TexCoords;
 
 uniform vec3 lightPos;
 uniform vec3 viewPos;
@@ -12,8 +11,6 @@ uniform vec3 objectColor;
 
 void main()
 {
-    vec3 backgroundColor = vec3(0.1, 0.1, 0.1);
-
     float ambientStrength = 0.1;
     vec3 ambient = ambientStrength * lightColor;
     
@@ -29,5 +26,5 @@ void main()
     vec3 specular = specularStrength * spec * lightColor;
     
     vec3 result = (ambient + diffuse + specular) * objectColor;
-    FragColor = vec4(result + backgroundColor * (1.0 - 1.0), 1.0); // 将 result.a 替换为 1.0
-} 
+    FragColor = vec4(result, 1.0);
+}
