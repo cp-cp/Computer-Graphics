@@ -539,6 +539,30 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_ssize_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/strings.h \
   /opt/homebrew/include/glm/gtc/type_ptr.inl \
+  /opt/homebrew/include/glm/gtx/quaternion.hpp \
+  /opt/homebrew/include/glm/gtx/../glm.hpp \
+  /opt/homebrew/include/glm/gtx/../gtc/constants.hpp \
+  /opt/homebrew/include/glm/gtx/../gtc/quaternion.hpp \
+  /opt/homebrew/include/glm/gtx/../ext/quaternion_exponential.hpp \
+  /opt/homebrew/include/glm/gtx/../ext/../common.hpp \
+  /opt/homebrew/include/glm/gtx/../ext/../trigonometric.hpp \
+  /opt/homebrew/include/glm/gtx/../ext/../geometric.hpp \
+  /opt/homebrew/include/glm/gtx/../ext/../ext/scalar_constants.hpp \
+  /opt/homebrew/include/glm/gtx/../ext/quaternion_exponential.inl \
+  /opt/homebrew/include/glm/gtx/../ext/scalar_constants.hpp \
+  /opt/homebrew/include/glm/gtx/../gtx/norm.hpp \
+  /opt/homebrew/include/glm/gtx/../gtx/../geometric.hpp \
+  /opt/homebrew/include/glm/gtx/../gtx/../gtx/quaternion.hpp \
+  /opt/homebrew/include/glm/gtx/../gtx/../gtx/component_wise.hpp \
+  /opt/homebrew/include/glm/gtx/../gtx/../gtx/../detail/setup.hpp \
+  /opt/homebrew/include/glm/gtx/../gtx/../gtx/../detail/qualifier.hpp \
+  /opt/homebrew/include/glm/gtx/../gtx/../gtx/component_wise.inl \
+  /opt/homebrew/include/glm/gtx/../gtx/../gtx/../ext/scalar_common.hpp \
+  /opt/homebrew/include/glm/gtx/../gtx/../gtx/../ext/../common.hpp \
+  /opt/homebrew/include/glm/gtx/../gtx/../gtx/../ext/scalar_common.inl \
+  /opt/homebrew/include/glm/gtx/../gtx/norm.inl \
+  /opt/homebrew/include/glm/gtx/../gtx/../detail/qualifier.hpp \
+  /opt/homebrew/include/glm/gtx/quaternion.inl \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/ios \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/ios.h \
@@ -1244,4 +1268,9 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: \
   /opt/homebrew/include/assimp/anim.h \
   /opt/homebrew/include/assimp/metadata.h \
   /opt/homebrew/include/assimp/postprocess.h \
-  /Users/cp_cp/GitHub/OpenGL/include/stb_image.h
+  /Users/cp_cp/GitHub/OpenGL/include/stb_image.h \
+  /Users/cp_cp/GitHub/OpenGL/include/imgui.h \
+  /Users/cp_cp/GitHub/OpenGL/include/imconfig.h \
+  /Users/cp_cp/GitHub/OpenGL/include/imgui_impl_glfw.h \
+  /Users/cp_cp/GitHub/OpenGL/include/imgui_impl_opengl3.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/TargetConditionals.h

@@ -96,6 +96,7 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/AvailabilityInternal.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/AvailabilityInternalLegacy.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/AvailabilityVersions.h \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/TargetConditionals.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/__wctype.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_ctermid.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_ctype.h \
@@ -1012,6 +1013,10 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
   /Users/cp_cp/GitHub/OpenGL/include/GLFW/glfw3.h \
   /Users/cp_cp/GitHub/OpenGL/include/KHR/khrplatform.h \
   /Users/cp_cp/GitHub/OpenGL/include/glad/glad.h \
+  /Users/cp_cp/GitHub/OpenGL/include/imconfig.h \
+  /Users/cp_cp/GitHub/OpenGL/include/imgui.h \
+  /Users/cp_cp/GitHub/OpenGL/include/imgui_impl_glfw.h \
+  /Users/cp_cp/GitHub/OpenGL/include/imgui_impl_opengl3.h \
   /Users/cp_cp/GitHub/OpenGL/include/stb_image.h \
   /Users/cp_cp/GitHub/OpenGL/src/model_loader.h \
   /Users/cp_cp/GitHub/OpenGL/src/shader.h \
@@ -1320,6 +1325,30 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
   /opt/homebrew/include/glm/gtc/matrix_transform.inl \
   /opt/homebrew/include/glm/gtc/type_ptr.hpp \
   /opt/homebrew/include/glm/gtc/type_ptr.inl \
+  /opt/homebrew/include/glm/common.hpp \
+  /opt/homebrew/include/glm/ext/scalar_constants.hpp \
+  /opt/homebrew/include/glm/geometric.hpp \
+  /opt/homebrew/include/glm/trigonometric.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_exponential.hpp \
+  /opt/homebrew/include/glm/ext/quaternion_exponential.inl \
+  /opt/homebrew/include/glm/ext/scalar_constants.hpp \
+  /opt/homebrew/include/glm/glm.hpp \
+  /opt/homebrew/include/glm/gtc/constants.hpp \
+  /opt/homebrew/include/glm/gtc/quaternion.hpp \
+  /opt/homebrew/include/glm/detail/qualifier.hpp \
+  /opt/homebrew/include/glm/geometric.hpp \
+  /opt/homebrew/include/glm/detail/qualifier.hpp \
+  /opt/homebrew/include/glm/detail/setup.hpp \
+  /opt/homebrew/include/glm/common.hpp \
+  /opt/homebrew/include/glm/ext/scalar_common.hpp \
+  /opt/homebrew/include/glm/ext/scalar_common.inl \
+  /opt/homebrew/include/glm/gtx/component_wise.hpp \
+  /opt/homebrew/include/glm/gtx/component_wise.inl \
+  /opt/homebrew/include/glm/gtx/quaternion.hpp \
+  /opt/homebrew/include/glm/gtx/norm.hpp \
+  /opt/homebrew/include/glm/gtx/norm.inl \
+  /opt/homebrew/include/glm/gtx/quaternion.hpp \
+  /opt/homebrew/include/glm/gtx/quaternion.inl \
   /opt/homebrew/include/glm/integer.hpp \
   /opt/homebrew/include/glm/mat2x2.hpp \
   /opt/homebrew/include/glm/mat2x3.hpp \
@@ -1339,9 +1368,23 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
   /opt/homebrew/include/glm/vector_relational.hpp
 
 
+/opt/homebrew/include/glm/integer.hpp:
+
 /opt/homebrew/include/glm/packing.hpp:
 
-/opt/homebrew/include/glm/integer.hpp:
+/opt/homebrew/include/glm/gtx/quaternion.inl:
+
+/opt/homebrew/include/glm/gtx/quaternion.hpp:
+
+/opt/homebrew/include/glm/gtx/component_wise.inl:
+
+/opt/homebrew/include/glm/gtx/component_wise.hpp:
+
+/opt/homebrew/include/glm/ext/scalar_common.inl:
+
+/opt/homebrew/include/glm/ext/scalar_common.hpp:
+
+/opt/homebrew/include/glm/ext/quaternion_exponential.inl:
 
 /opt/homebrew/include/glm/gtc/type_ptr.inl:
 
@@ -1576,6 +1619,8 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 /Users/cp_cp/GitHub/OpenGL/src/model_loader.h:
 
 /Users/cp_cp/GitHub/OpenGL/include/stb_image.h:
+
+/Users/cp_cp/GitHub/OpenGL/include/imconfig.h:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/16/include/limits.h:
 
@@ -2007,6 +2052,8 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_rvalue_reference.h:
 
+/opt/homebrew/include/glm/ext/quaternion_exponential.hpp:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/ranges_copy.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/add_pointer.h:
@@ -2138,6 +2185,8 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_types/_u_int64_t.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/strip_signature.h:
+
+/Users/cp_cp/GitHub/OpenGL/include/imgui.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/ranges_uninitialized_algorithms.h:
 
@@ -2523,6 +2572,8 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/is_partitioned.h:
 
+/opt/homebrew/include/glm/gtx/norm.inl:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/rotate_copy.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/equality_comparable.h:
@@ -2726,6 +2777,8 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/three_way_comp_ref_type.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_pthread/_pthread_types.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/TargetConditionals.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/_pthread/_pthread_condattr_t.h:
 
@@ -3053,6 +3106,8 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/ranges_all_of.h:
 
+/opt/homebrew/include/glm/gtx/norm.hpp:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_unbounded_array.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__concepts/class_or_enum.h:
@@ -3062,6 +3117,8 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/pstl_find.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/ranges_is_partitioned.h:
+
+/Users/cp_cp/GitHub/OpenGL/include/imgui_impl_opengl3.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/in_found_result.h:
 
@@ -3120,20 +3177,6 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/sys/cdefs.h:
 
 /Users/cp_cp/GitHub/OpenGL/include/glad/glad.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_literal_type.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/ranges_shuffle.h:
-
-/opt/homebrew/include/glm/ext/vector_relational.inl:
-
-/opt/homebrew/include/glm/vec4.hpp:
-
-/opt/homebrew/include/glm/detail/func_vector_relational.inl:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/subrange.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/pstl_backend.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/is_heap.h:
 
@@ -3379,6 +3422,20 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_types/_wctrans_t.h:
 
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_literal_type.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/ranges_shuffle.h:
+
+/opt/homebrew/include/glm/ext/vector_relational.inl:
+
+/opt/homebrew/include/glm/vec4.hpp:
+
+/opt/homebrew/include/glm/detail/func_vector_relational.inl:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__fwd/subrange.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/pstl_backend.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/arm/arch.h:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/16/include/stdint.h:
@@ -3493,6 +3550,8 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/secure/_stdio.h:
 
+/Users/cp_cp/GitHub/OpenGL/include/imgui_impl_glfw.h:
+
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/is_reference_wrapper.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/ranges_count_if.h:
@@ -3524,8 +3583,6 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/mutex:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__type_traits/void_t.h:
-
-/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/replace_copy_if.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__memory/allocate_at_least.h:
 
@@ -3620,5 +3677,7 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/pstl_transform.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/Availability.h:
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/replace_copy_if.h:
 
 /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/c++/v1/__algorithm/ranges_remove_copy_if.h:

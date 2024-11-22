@@ -24,8 +24,14 @@ find_package(glm REQUIRED)
 # 查找 Assimp
 find_package(ASSIMP REQUIRED)
 
+set(IMGUI_DIR ${PROJECT_SOURCE_DIR}/imgui)
+
+
 # 确保将 stb_image 源文件添加到构建中
 add_library(stb_image STATIC /Users/cp_cp/GitHub/OpenGL/stb/deprecated/stb_image.c)
+add_library(imgui STATIC ${IMGUI_DIR}/imgui.cpp ${IMGUI_DIR}/imgui_draw.cpp ${IMGUI_DIR}/imgui_widgets.cpp ${IMGUI_DIR}/imgui_tables.cpp ${IMGUI_DIR}/imgui_demo.cpp)
+add_library(imgui_impl_opengl3 STATIC ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp)
+add_library(imgui_impl_glfw STATIC ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp)
 
 # 执行编译命令
 set(SOURCES ${SRC_DIR}glad.c ${SRC_DIR}main.cpp)
@@ -37,7 +43,7 @@ if (APPLE)
 endif()
 
 # 链接 GLFW, GLM 和 Assimp
-target_link_libraries(HelloGL glfw ${GLM_LIBRARIES} ${ASSIMP_LIBRARIES} stb_image)
+target_link_libraries(HelloGL glfw ${GLM_LIBRARIES} ${ASSIMP_LIBRARIES} stb_image imgui_impl_opengl3 imgui_impl_glfw imgui)
 
 include(CTest)
 enable_testing()

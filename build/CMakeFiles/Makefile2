@@ -64,6 +64,9 @@ CMAKE_BINARY_DIR = /Users/cp_cp/GitHub/OpenGL/build
 
 # The main recursive "all" target.
 all: CMakeFiles/stb_image.dir/all
+all: CMakeFiles/imgui.dir/all
+all: CMakeFiles/imgui_impl_opengl3.dir/all
+all: CMakeFiles/imgui_impl_glfw.dir/all
 all: CMakeFiles/HelloGL.dir/all
 .PHONY : all
 
@@ -73,6 +76,9 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/stb_image.dir/clean
+clean: CMakeFiles/imgui.dir/clean
+clean: CMakeFiles/imgui_impl_opengl3.dir/clean
+clean: CMakeFiles/imgui_impl_glfw.dir/clean
 clean: CMakeFiles/HelloGL.dir/clean
 clean: CMakeFiles/Experimental.dir/clean
 clean: CMakeFiles/Nightly.dir/clean
@@ -111,7 +117,7 @@ clean: CMakeFiles/ContinuousSubmit.dir/clean
 CMakeFiles/stb_image.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/stb_image.dir/build.make CMakeFiles/stb_image.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/stb_image.dir/build.make CMakeFiles/stb_image.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles --progress-num=4,5 "Built target stb_image"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles --progress-num=14,15 "Built target stb_image"
 .PHONY : CMakeFiles/stb_image.dir/all
 
 # Build rule for subdir invocation for target.
@@ -131,10 +137,91 @@ CMakeFiles/stb_image.dir/clean:
 .PHONY : CMakeFiles/stb_image.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/imgui.dir
+
+# All Build rule for target.
+CMakeFiles/imgui.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui.dir/build.make CMakeFiles/imgui.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui.dir/build.make CMakeFiles/imgui.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles --progress-num=4,5,6,7,8,9 "Built target imgui"
+.PHONY : CMakeFiles/imgui.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/imgui.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/imgui.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles 0
+.PHONY : CMakeFiles/imgui.dir/rule
+
+# Convenience name for target.
+imgui: CMakeFiles/imgui.dir/rule
+.PHONY : imgui
+
+# clean rule for target.
+CMakeFiles/imgui.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui.dir/build.make CMakeFiles/imgui.dir/clean
+.PHONY : CMakeFiles/imgui.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/imgui_impl_opengl3.dir
+
+# All Build rule for target.
+CMakeFiles/imgui_impl_opengl3.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui_impl_opengl3.dir/build.make CMakeFiles/imgui_impl_opengl3.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui_impl_opengl3.dir/build.make CMakeFiles/imgui_impl_opengl3.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles --progress-num=12,13 "Built target imgui_impl_opengl3"
+.PHONY : CMakeFiles/imgui_impl_opengl3.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/imgui_impl_opengl3.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/imgui_impl_opengl3.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles 0
+.PHONY : CMakeFiles/imgui_impl_opengl3.dir/rule
+
+# Convenience name for target.
+imgui_impl_opengl3: CMakeFiles/imgui_impl_opengl3.dir/rule
+.PHONY : imgui_impl_opengl3
+
+# clean rule for target.
+CMakeFiles/imgui_impl_opengl3.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui_impl_opengl3.dir/build.make CMakeFiles/imgui_impl_opengl3.dir/clean
+.PHONY : CMakeFiles/imgui_impl_opengl3.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/imgui_impl_glfw.dir
+
+# All Build rule for target.
+CMakeFiles/imgui_impl_glfw.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui_impl_glfw.dir/build.make CMakeFiles/imgui_impl_glfw.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui_impl_glfw.dir/build.make CMakeFiles/imgui_impl_glfw.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles --progress-num=10,11 "Built target imgui_impl_glfw"
+.PHONY : CMakeFiles/imgui_impl_glfw.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/imgui_impl_glfw.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/imgui_impl_glfw.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles 0
+.PHONY : CMakeFiles/imgui_impl_glfw.dir/rule
+
+# Convenience name for target.
+imgui_impl_glfw: CMakeFiles/imgui_impl_glfw.dir/rule
+.PHONY : imgui_impl_glfw
+
+# clean rule for target.
+CMakeFiles/imgui_impl_glfw.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgui_impl_glfw.dir/build.make CMakeFiles/imgui_impl_glfw.dir/clean
+.PHONY : CMakeFiles/imgui_impl_glfw.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/HelloGL.dir
 
 # All Build rule for target.
 CMakeFiles/HelloGL.dir/all: CMakeFiles/stb_image.dir/all
+CMakeFiles/HelloGL.dir/all: CMakeFiles/imgui.dir/all
+CMakeFiles/HelloGL.dir/all: CMakeFiles/imgui_impl_opengl3.dir/all
+CMakeFiles/HelloGL.dir/all: CMakeFiles/imgui_impl_glfw.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloGL.dir/build.make CMakeFiles/HelloGL.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloGL.dir/build.make CMakeFiles/HelloGL.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles --progress-num=1,2,3 "Built target HelloGL"
@@ -142,7 +229,7 @@ CMakeFiles/HelloGL.dir/all: CMakeFiles/stb_image.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/HelloGL.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles 15
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/HelloGL.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles 0
 .PHONY : CMakeFiles/HelloGL.dir/rule

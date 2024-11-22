@@ -1,19 +1,24 @@
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <iostream>
 #include "shader.h"
 #include "model_loader.h"
 #include "stb_image.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 // 窗口宽高
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
 
 // 摄像机参数
-glm::vec3 cameraPos(0.0f, 0.0f, 5.0f);
+glm::vec3 cameraPos(0.0f, 5.0f, 20.0f);
 glm::vec3 cameraFront(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp(0.0f, 1.0f, 0.0f);
 float deltaTime = 0.0f;
@@ -31,12 +36,25 @@ float lastX = WIDTH / 2.0f, lastY = HEIGHT / 2.0f;
 // 光源位置
 glm::vec3 lightPos(0.0f, 10.0f, 10.0f);
 
+// 定义起始和终止姿态
+glm::quat startOrientation = glm::quat(glm::vec3(0.0f, 0.0f, 0.0f)); // 初始姿态
+glm::quat endOrientation = glm::quat(glm::vec3(glm::radians(90.0f), glm::radians(45.0f), 0.0f)); // 终止姿态
+
+// 定义插值参数
+float interpolationFactor = 0.0f;
+bool isInterpolating = false;
+
 // 回调函数声明
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 void scrollCallback(GLFWwindow *window, double xoffset, double yoffset);
 void renderScene(const Shader &shader);
+
+// 封装四元数旋转的函数
+glm::quat createQuaternionFromEuler(const glm::vec3 &eulerAngles) {
+    return glm::quat(glm::vec3(eulerAngles)); // 根据欧拉角创建四元数
+}
 
 int main()
 {
@@ -85,8 +103,6 @@ int main()
     }
 
     Shader shader("/Users/cp_cp/GitHub/OpenGL/shaders/vertex.glsl", "/Users/cp_cp/GitHub/OpenGL/shaders/fragment.glsl");
-    // Shader depthShader("/path/to/depth_vertex_shader.glsl", "/path/to/depth_fragment_shader.glsl");
-    // Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
     // 定义一个大的平面顶点数据
     float planeVertices[] = {
         // 位置          // 法线
@@ -126,6 +142,24 @@ int main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
+    // 初始化 ImGui
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO(); (void)io;
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+
+    // 设置 ImGui 样式
+    ImGui::StyleColorsDark();
+
+    // 定义前后位置变量
+    glm::vec3 newPosition(0.0f, 0.0f, 0.0f);
+    glm::vec3 newRotation(0.0f, 0.0f, 0.0f);
+    glm::vec3 startPosition = modelPos; // 初始位置
+    glm::vec3 startRotation = modelRotation; // 初始旋转
+    float interpolationFactor = 0.0f; // 插值因子
+    bool isInterpolating = false; // 是否正在插值
+
     // 渲染循环
     while (!glfwWindowShouldClose(window))
     {
@@ -150,12 +184,48 @@ int main()
         shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);                   // 光源颜色
         shader.setVec3("objectColor", 1.0f, 0.5f, 0.2f);                  // 物体颜色
 
-        // 模型矩阵
+        // 启动新的 ImGui 帧
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        // 创建一个窗口
+        ImGui::Begin("Position Input");
+        ImGui::InputFloat3("New Position", &newPosition[0]); // 输入新的位置
+        ImGui::Text("Model Position: (%.2f, %.2f, %.2f)", modelPos.x, modelPos.y, modelPos.z);
+        ImGui::InputFloat3("New Rotation", &newRotation[0]); // 输入新的旋转
+        ImGui::Text("Model Front Direction: (%.2f, %.2f, %.2f)", modelRotation.x, modelRotation.y, modelRotation.z);
+        if (ImGui::Button("Apply"))
+        {
+            // 开始插值
+            startPosition = modelPos; // 设置起始位置
+            startRotation = modelRotation; // 设置起始旋转
+            interpolationFactor = 0.0f; // 重置插值因子
+            isInterpolating = true; // 开始插值
+        }
+        ImGui::End();
+
+        // 更新插值
+        if (isInterpolating)
+        {
+            interpolationFactor += deltaTime * 0.5f; // 控制插值速度
+            if (interpolationFactor > 1.0f)
+            {
+                interpolationFactor = 1.0f;
+                isInterpolating = false; // 停止插值
+            }
+            modelPos = glm::mix(startPosition, newPosition, interpolationFactor); // 使用线性插值
+            modelRotation = glm::mix(startRotation, newRotation, interpolationFactor); // 同时对旋转进行线性插值
+        }
+
+        // 更新模型矩阵
         glm::mat4 modelMat = glm::mat4(1.0f);
-        modelMat = glm::translate(modelMat, modelPos);                                                // 应用平移
-        modelMat = glm::rotate(modelMat, glm::radians(modelRotation.x), glm::vec3(1.0f, 0.0f, 0.0f)); // 绕 X 轴旋转
-        modelMat = glm::rotate(modelMat, glm::radians(modelRotation.y), glm::vec3(0.0f, 1.0f, 0.0f)); // 绕 Y 轴旋转
-        modelMat = glm::scale(modelMat, glm::vec3(modelScale));                                       // 应用缩放
+        modelMat = glm::translate(modelMat, modelPos); // 应用平移
+        modelMat = glm::rotate(modelMat, modelRotation.x, glm::vec3(0.01f, 0.0f, 0.0f)); // 应用旋转
+        modelMat = glm::rotate(modelMat, modelRotation.y, glm::vec3(0.0f, 0.01f, 0.0f)); // 应用旋转
+        modelMat = glm::rotate(modelMat, modelRotation.z, glm::vec3(0.0f, 0.0f, 0.01f)); // 应用旋转
+        modelMat = glm::scale(modelMat, glm::vec3(modelScale)); // 应用缩放
+
         shader.setMat4("model", modelMat);
 
         // 视图和投影矩阵
@@ -178,6 +248,10 @@ int main()
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
+        // 渲染 ImGui
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
         // 交换缓冲
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -187,6 +261,11 @@ int main()
     glDeleteVertexArrays(1, &planeVAO);
     glDeleteBuffers(1, &planeVBO);
     glDeleteBuffers(1, &planeEBO);
+
+    // 清理 ImGui
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
     glfwTerminate();
     return 0;
@@ -269,6 +348,13 @@ void processInput(GLFWwindow *window)
         modelScale += 0.01;
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) // 缩小模型
         modelScale -= 0.01;
+
+    // 开始插值
+    if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+    {
+        isInterpolating = true;
+        interpolationFactor = 0.0f;
+    }
 }
 
 void mouseCallback(GLFWwindow *window, double xpos, double ypos)

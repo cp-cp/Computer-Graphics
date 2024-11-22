@@ -1,4 +1,7 @@
 /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles/stb_image.dir
+/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles/imgui.dir
+/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles/imgui_impl_opengl3.dir
+/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles/imgui_impl_glfw.dir
 /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles/HelloGL.dir
 /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles/Experimental.dir
 /Users/cp_cp/GitHub/OpenGL/build/CMakeFiles/Nightly.dir

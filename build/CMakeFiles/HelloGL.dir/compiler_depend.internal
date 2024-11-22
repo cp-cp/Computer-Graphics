@@ -98,6 +98,7 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/AvailabilityInternal.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/AvailabilityInternalLegacy.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/AvailabilityVersions.h
+ /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/TargetConditionals.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/__wctype.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_ctermid.h
  /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/usr/include/_ctype.h
@@ -1014,6 +1015,10 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o
  /Users/cp_cp/GitHub/OpenGL/include/GLFW/glfw3.h
  /Users/cp_cp/GitHub/OpenGL/include/KHR/khrplatform.h
  /Users/cp_cp/GitHub/OpenGL/include/glad/glad.h
+ /Users/cp_cp/GitHub/OpenGL/include/imconfig.h
+ /Users/cp_cp/GitHub/OpenGL/include/imgui.h
+ /Users/cp_cp/GitHub/OpenGL/include/imgui_impl_glfw.h
+ /Users/cp_cp/GitHub/OpenGL/include/imgui_impl_opengl3.h
  /Users/cp_cp/GitHub/OpenGL/include/stb_image.h
  /Users/cp_cp/GitHub/OpenGL/src/model_loader.h
  /Users/cp_cp/GitHub/OpenGL/src/shader.h
@@ -1322,6 +1327,30 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o
  /opt/homebrew/include/glm/gtc/matrix_transform.inl
  /opt/homebrew/include/glm/gtc/type_ptr.hpp
  /opt/homebrew/include/glm/gtc/type_ptr.inl
+ /opt/homebrew/include/glm/common.hpp
+ /opt/homebrew/include/glm/ext/scalar_constants.hpp
+ /opt/homebrew/include/glm/geometric.hpp
+ /opt/homebrew/include/glm/trigonometric.hpp
+ /opt/homebrew/include/glm/ext/quaternion_exponential.hpp
+ /opt/homebrew/include/glm/ext/quaternion_exponential.inl
+ /opt/homebrew/include/glm/ext/scalar_constants.hpp
+ /opt/homebrew/include/glm/glm.hpp
+ /opt/homebrew/include/glm/gtc/constants.hpp
+ /opt/homebrew/include/glm/gtc/quaternion.hpp
+ /opt/homebrew/include/glm/detail/qualifier.hpp
+ /opt/homebrew/include/glm/geometric.hpp
+ /opt/homebrew/include/glm/detail/qualifier.hpp
+ /opt/homebrew/include/glm/detail/setup.hpp
+ /opt/homebrew/include/glm/common.hpp
+ /opt/homebrew/include/glm/ext/scalar_common.hpp
+ /opt/homebrew/include/glm/ext/scalar_common.inl
+ /opt/homebrew/include/glm/gtx/component_wise.hpp
+ /opt/homebrew/include/glm/gtx/component_wise.inl
+ /opt/homebrew/include/glm/gtx/quaternion.hpp
+ /opt/homebrew/include/glm/gtx/norm.hpp
+ /opt/homebrew/include/glm/gtx/norm.inl
+ /opt/homebrew/include/glm/gtx/quaternion.hpp
+ /opt/homebrew/include/glm/gtx/quaternion.inl
  /opt/homebrew/include/glm/integer.hpp
  /opt/homebrew/include/glm/mat2x2.hpp
  /opt/homebrew/include/glm/mat2x3.hpp
