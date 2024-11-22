@@ -5,7 +5,7 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 C_DEFINES = 
 
-C_INCLUDES = -I/Users/cp_cp/GitHub/OpenGL/include -I/Users/cp_cp/GitHub/OpenGL/lib -isystem /opt/homebrew/include
+C_INCLUDES = -I/Users/cp_cp/GitHub/OpenGL/include -I/Users/cp_cp/GitHub/OpenGL/lib -I/Users/cp_cp/GitHub/OpenGL/path/to/stb_image -isystem /opt/homebrew/include
 
 C_FLAGSarm64 =  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
 
@@ -13,7 +13,7 @@ C_FLAGS =  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/cp_cp/GitHub/OpenGL/include -I/Users/cp_cp/GitHub/OpenGL/lib -isystem /opt/homebrew/include
+CXX_INCLUDES = -I/Users/cp_cp/GitHub/OpenGL/include -I/Users/cp_cp/GitHub/OpenGL/lib -I/Users/cp_cp/GitHub/OpenGL/path/to/stb_image -isystem /opt/homebrew/include
 
 CXX_FLAGSarm64 = -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
 

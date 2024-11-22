@@ -18,10 +18,17 @@ public:
         loadModel(path);
     }
 
+    bool isLoaded() const
+    {
+        return !meshes.empty();
+    }
+
     void draw(const Shader &shader)
     {
         for (unsigned int i = 0; i < meshes.size(); i++)
+        {
             meshes[i].draw(shader);
+        }
     }
 
 private:
@@ -55,7 +62,12 @@ private:
         void draw(const Shader &shader)
         {
             glBindVertexArray(VAO);
+            // std::cout << "Drawing mesh with " << indices.size() << " indices." << std::endl;
             glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+            if (glGetError() != GL_NO_ERROR)
+            {
+                std::cerr << "Failed to draw mesh." << std::endl;
+            }
             glBindVertexArray(0);
         }
 
@@ -97,7 +109,6 @@ private:
             return;
         }
         directory = path.substr(0, path.find_last_of('/'));
-
         processNode(scene->mRootNode, scene);
     }
 
@@ -119,7 +130,6 @@ private:
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
         std::vector<Texture> textures;
-
         for (unsigned int i = 0; i < mesh->mNumVertices; i++)
         {
             Vertex vertex;
@@ -146,7 +156,7 @@ private:
 
             vertices.push_back(vertex);
         }
-
+        // std::cout<<mesh->mNumFaces<<std::endl;
         for (unsigned int i = 0; i < mesh->mNumFaces; i++)
         {
             aiFace face = mesh->mFaces[i];
@@ -158,4 +168,4 @@ private:
     }
 };
 
-#endif 
+#endif

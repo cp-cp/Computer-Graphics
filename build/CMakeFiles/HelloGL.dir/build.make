@@ -110,6 +110,7 @@ HelloGL: CMakeFiles/HelloGL.dir/src/main.cpp.o
 HelloGL: CMakeFiles/HelloGL.dir/build.make
 HelloGL: /opt/homebrew/lib/libglfw.3.4.dylib
 HelloGL: /opt/homebrew/lib/libassimp.5.4.3.dylib
+HelloGL: libstb_image.a
 HelloGL: /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/usr/lib/libz.tbd
 HelloGL: CMakeFiles/HelloGL.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/cp_cp/GitHub/OpenGL/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable HelloGL"

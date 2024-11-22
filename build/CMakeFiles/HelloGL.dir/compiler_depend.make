@@ -1012,6 +1012,7 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
   /Users/cp_cp/GitHub/OpenGL/include/GLFW/glfw3.h \
   /Users/cp_cp/GitHub/OpenGL/include/KHR/khrplatform.h \
   /Users/cp_cp/GitHub/OpenGL/include/glad/glad.h \
+  /Users/cp_cp/GitHub/OpenGL/include/stb_image.h \
   /Users/cp_cp/GitHub/OpenGL/src/model_loader.h \
   /Users/cp_cp/GitHub/OpenGL/src/shader.h \
   /opt/homebrew/include/assimp/Compiler/poppack1.h \
@@ -1573,6 +1574,8 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: /Users/cp_cp/GitHub/OpenGL/src/main.cpp \
 /Users/cp_cp/GitHub/OpenGL/src/shader.h:
 
 /Users/cp_cp/GitHub/OpenGL/src/model_loader.h:
+
+/Users/cp_cp/GitHub/OpenGL/include/stb_image.h:
 
 /Library/Developer/CommandLineTools/usr/lib/clang/16/include/limits.h:
 

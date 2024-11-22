@@ -147,6 +147,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named stb_image
+
+# Build rule for target.
+stb_image: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 stb_image
+.PHONY : stb_image
+
+# fast build rule for target.
+stb_image/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stb_image.dir/build.make CMakeFiles/stb_image.dir/build
+.PHONY : stb_image/fast
+
+#=============================================================================
 # Target rules for targets named HelloGL
 
 # Build rule for target.
@@ -571,6 +584,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloGL.dir/build.make CMakeFiles/HelloGL.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+stb/deprecated/stb_image.o: stb/deprecated/stb_image.c.o
+.PHONY : stb/deprecated/stb_image.o
+
+# target to build an object file
+stb/deprecated/stb_image.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stb_image.dir/build.make CMakeFiles/stb_image.dir/stb/deprecated/stb_image.c.o
+.PHONY : stb/deprecated/stb_image.c.o
+
+stb/deprecated/stb_image.i: stb/deprecated/stb_image.c.i
+.PHONY : stb/deprecated/stb_image.i
+
+# target to preprocess a source file
+stb/deprecated/stb_image.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stb_image.dir/build.make CMakeFiles/stb_image.dir/stb/deprecated/stb_image.c.i
+.PHONY : stb/deprecated/stb_image.c.i
+
+stb/deprecated/stb_image.s: stb/deprecated/stb_image.c.s
+.PHONY : stb/deprecated/stb_image.s
+
+# target to generate assembly for a file
+stb/deprecated/stb_image.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/stb_image.dir/build.make CMakeFiles/stb_image.dir/stb/deprecated/stb_image.c.s
+.PHONY : stb/deprecated/stb_image.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -611,12 +648,16 @@ help:
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
 	@echo "... HelloGL"
+	@echo "... stb_image"
 	@echo "... src/glad.o"
 	@echo "... src/glad.i"
 	@echo "... src/glad.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... stb/deprecated/stb_image.o"
+	@echo "... stb/deprecated/stb_image.i"
+	@echo "... stb/deprecated/stb_image.s"
 .PHONY : help
 
 

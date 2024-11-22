@@ -6,7 +6,7 @@
 #include <iostream>
 #include "shader.h"
 #include "model_loader.h"
-
+#include "stb_image.h"
 // 窗口宽高
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
@@ -78,6 +78,9 @@ int main()
     // Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
     // 加载模型
     Model model("/Users/cp_cp/GitHub/OpenGL/resources/model.obj");
+    if (!model.isLoaded()) {
+        std::cerr << "Failed to load model from path: /Users/cp_cp/GitHub/OpenGL/resources/model.obj" << std::endl;
+    }
 
     // 初始化着色器
     // Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
@@ -181,7 +184,7 @@ int main()
         shader.setMat4("projection", projection);
 
         // 在渲染循环中设置模型颜色
-        // shader.setVec3("objectColor", 1.0f, 0.5f, 0.2f); // 设置为橙色
+        shader.setVec3("objectColor", 1.0f, 0.5f, 0.2f); // 设置为橙色
 
         // 绘制立方体
         model.draw(shader);
@@ -223,6 +226,7 @@ void processInput(GLFWwindow *window)
     {                                                // 按下 R 键复位模型
         modelPos = glm::vec3(0.0f, -10.0f, 0.0f);    // 复位模型位置
         modelRotation = glm::vec3(0.0f, 0.0f, 0.0f); // 复位模型旋转
+        modelScale = 0.6f;                            // 复位模型缩放
     }
     // 添加相机复位逻辑
     if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
@@ -278,6 +282,10 @@ void processInput(GLFWwindow *window)
         if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) // 向右平移
             modelPos.x += modelMoveSpeed;
     }
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) // 放大模型
+        modelScale += 0.01;
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) // 缩小模型
+        modelScale -= 0.01;
 }
 
 void mouseCallback(GLFWwindow *window, double xpos, double ypos)

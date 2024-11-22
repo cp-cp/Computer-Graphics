@@ -1243,4 +1243,5 @@ CMakeFiles/HelloGL.dir/src/main.cpp.o: \
   /opt/homebrew/include/assimp/material.inl \
   /opt/homebrew/include/assimp/anim.h \
   /opt/homebrew/include/assimp/metadata.h \
-  /opt/homebrew/include/assimp/postprocess.h
+  /opt/homebrew/include/assimp/postprocess.h \
+  /Users/cp_cp/GitHub/OpenGL/include/stb_image.h

@@ -12,6 +12,9 @@ set(HEADER_DIR ${PROJECT_SOURCE_DIR}/include/)
 set(LIB_DIR ${PROJECT_SOURCE_DIR}/lib/)
 include_directories(${HEADER_DIR} ${LIB_DIR})
 
+# 添加 stb_image 的路径
+include_directories(${CMAKE_SOURCE_DIR}/path/to/stb_image)
+
 # 查找 GLFW
 find_package(glfw3 REQUIRED)
 
@@ -20,6 +23,9 @@ find_package(glm REQUIRED)
 
 # 查找 Assimp
 find_package(ASSIMP REQUIRED)
+
+# 确保将 stb_image 源文件添加到构建中
+add_library(stb_image STATIC /Users/cp_cp/GitHub/OpenGL/stb/deprecated/stb_image.c)
 
 # 执行编译命令
 set(SOURCES ${SRC_DIR}glad.c ${SRC_DIR}main.cpp)
@@ -31,7 +37,7 @@ if (APPLE)
 endif()
 
 # 链接 GLFW, GLM 和 Assimp
-target_link_libraries(HelloGL glfw ${GLM_LIBRARIES} ${ASSIMP_LIBRARIES})
+target_link_libraries(HelloGL glfw ${GLM_LIBRARIES} ${ASSIMP_LIBRARIES} stb_image)
 
 include(CTest)
 enable_testing()
