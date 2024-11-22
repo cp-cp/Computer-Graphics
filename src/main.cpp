@@ -7,6 +7,7 @@
 #include "shader.h"
 #include "model_loader.h"
 #include "stb_image.h"
+
 // 窗口宽高
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
@@ -27,11 +28,15 @@ float modelScale = 0.6f;
 bool firstMouse = true;
 float lastX = WIDTH / 2.0f, lastY = HEIGHT / 2.0f;
 
+// 光源位置
+glm::vec3 lightPos(0.0f, 10.0f, 10.0f);
+
 // 回调函数声明
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 void scrollCallback(GLFWwindow *window, double xoffset, double yoffset);
+void renderScene(const Shader &shader);
 
 int main()
 {
@@ -74,51 +79,28 @@ int main()
     glEnable(GL_DEPTH_TEST);
 
     // 加载模型和着色器
-    // Model model("path/to/model.obj");
-    // Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
-    // 加载模型
     Model model("/Users/cp_cp/GitHub/OpenGL/resources/model.obj");
     if (!model.isLoaded()) {
         std::cerr << "Failed to load model from path: /Users/cp_cp/GitHub/OpenGL/resources/model.obj" << std::endl;
     }
 
-    // 初始化着色器
-    // Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
     Shader shader("/Users/cp_cp/GitHub/OpenGL/shaders/vertex.glsl", "/Users/cp_cp/GitHub/OpenGL/shaders/fragment.glsl");
-
+    // Shader depthShader("/path/to/depth_vertex_shader.glsl", "/path/to/depth_fragment_shader.glsl");
+    // Shader shader("shaders/vertex.glsl", "shaders/fragment.glsl");
     // 定义一个大的平面顶点数据
     float planeVertices[] = {
         // 位置          // 法线
-        100.0f,
-        -10.0f,
-        100.0f,
-        0.0f,
-        1.0f,
-        0.0f,
-        -100.0f,
-        -10.0f,
-        100.0f,
-        0.0f,
-        1.0f,
-        0.0f,
-        -100.0f,
-        -10.0f,
-        -100.0f,
-        0.0f,
-        1.0f,
-        0.0f,
-        100.0f,
-        -10.0f,
-        -100.0f,
-        0.0f,
-        1.0f,
-        0.0f,
+        100.0f, -10.0f, 100.0f, 0.0f, 1.0f, 0.0f,
+        -100.0f, -10.0f, 100.0f, 0.0f, 1.0f, 0.0f,
+        -100.0f, -10.0f, -100.0f, 0.0f, 1.0f, 0.0f,
+        100.0f, -10.0f, -100.0f, 0.0f, 1.0f, 0.0f,
     };
 
     // 定义平面索引
     unsigned int planeIndices[] = {
         0, 1, 2,
-        0, 2, 3};
+        0, 2, 3
+    };
 
     // 创建平面 VAO 和 VBO
     unsigned int planeVAO, planeVBO, planeEBO;
@@ -163,7 +145,6 @@ int main()
         shader.use();
 
         // 设置光源属性
-        glm::vec3 lightPos(100.0f, 100.0f, 100.0f);                       // 添加光源位置
         shader.setVec3("lightPos", lightPos.x, lightPos.y, lightPos.z);   // 光源位置
         shader.setVec3("viewPos", cameraPos.x, cameraPos.y, cameraPos.z); // 观察者位置
         shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);                   // 光源颜色
@@ -200,7 +181,9 @@ int main()
         // 交换缓冲
         glfwSwapBuffers(window);
         glfwPollEvents();
-    } // 清理
+    }
+
+    // 清理
     glDeleteVertexArrays(1, &planeVAO);
     glDeleteBuffers(1, &planeVBO);
     glDeleteBuffers(1, &planeEBO);
@@ -308,7 +291,8 @@ void scrollCallback(GLFWwindow *window, double xoffset, double yoffset)
     //     modelScale = 0.1f; // 限制最小缩放值
 }
 
-void touchpadCallback(GLFWwindow *window, int touchpadId, int action)
+void renderScene(const Shader &shader)
 {
-    // 忽略触摸板输入
+    // 渲染场景的代码
+    // 这里你可以添加绘制模型或其他物体的代码
 }
