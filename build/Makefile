@@ -791,6 +791,30 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloGL.dir/build.make CMakeFiles/HelloGL.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/model_loader.o: src/model_loader.cpp.o
+.PHONY : src/model_loader.o
+
+# target to build an object file
+src/model_loader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloGL.dir/build.make CMakeFiles/HelloGL.dir/src/model_loader.cpp.o
+.PHONY : src/model_loader.cpp.o
+
+src/model_loader.i: src/model_loader.cpp.i
+.PHONY : src/model_loader.i
+
+# target to preprocess a source file
+src/model_loader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloGL.dir/build.make CMakeFiles/HelloGL.dir/src/model_loader.cpp.i
+.PHONY : src/model_loader.cpp.i
+
+src/model_loader.s: src/model_loader.cpp.s
+.PHONY : src/model_loader.s
+
+# target to generate assembly for a file
+src/model_loader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/HelloGL.dir/build.make CMakeFiles/HelloGL.dir/src/model_loader.cpp.s
+.PHONY : src/model_loader.cpp.s
+
 stb/deprecated/stb_image.o: stb/deprecated/stb_image.c.o
 .PHONY : stb/deprecated/stb_image.o
 
@@ -886,6 +910,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/model_loader.o"
+	@echo "... src/model_loader.i"
+	@echo "... src/model_loader.s"
 	@echo "... stb/deprecated/stb_image.o"
 	@echo "... stb/deprecated/stb_image.i"
 	@echo "... stb/deprecated/stb_image.s"

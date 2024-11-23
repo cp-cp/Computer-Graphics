@@ -122,8 +122,11 @@ int main()
     // 启用深度测试
     glEnable(GL_DEPTH_TEST);
 
+    // std::cout<<"Hello World!"<<std::endl;
+
     // 加载模型和着色器
     Model model("/Users/cp_cp/GitHub/OpenGL/resources/model.obj");
+    // Model model("'/Users/cp_cp/GitHub/OpenGL/模型下载/GN-005 高达_爱给网_aigei_com/KSG GvsG Next Plus - GN-005 Gundam Virtue - Ren.obj'");
     if (!model.isLoaded())
     {
         std::cerr << "Failed to load model from path: /Users/cp_cp/GitHub/OpenGL/resources/model.obj" << std::endl;
@@ -234,7 +237,9 @@ int main()
         processInput(window);
 
         // 清空屏幕
-        glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // 设置背景为白色
+        // glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // 设置背景为白色
+        //设置为灰色
+        glClearColor(0.9f, 0.9f, 0.9f, 0.9f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // 使用着色器
@@ -307,7 +312,7 @@ int main()
         shader.setMat4("projection", projection);
 
         // 在渲染循环中设置模型颜色
-        shader.setVec3("objectColor", 1.0f, 0.5f, 0.2f); // 设置为橙色
+        shader.setVec3("objectColor", 1.0f, 0.9f, 0.9f); // 设置为橙色
 
         // 绘制立方体
         model.draw(shader);

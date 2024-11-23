@@ -34,7 +34,7 @@ add_library(imgui_impl_opengl3 STATIC ${IMGUI_DIR}/backends/imgui_impl_opengl3.c
 add_library(imgui_impl_glfw STATIC ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp)
 
 # 执行编译命令
-set(SOURCES ${SRC_DIR}glad.c ${SRC_DIR}main.cpp)
+set(SOURCES ${SRC_DIR}glad.c ${SRC_DIR}main.cpp ${SRC_DIR}model_loader.cpp)
 add_executable(HelloGL ${SOURCES})
 
 # 链接系统的 OpenGL 框架

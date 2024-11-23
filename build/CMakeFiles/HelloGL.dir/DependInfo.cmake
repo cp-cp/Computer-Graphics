@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/cp_cp/GitHub/OpenGL/src/glad.c" "CMakeFiles/HelloGL.dir/src/glad.c.o" "gcc" "CMakeFiles/HelloGL.dir/src/glad.c.o.d"
   "/Users/cp_cp/GitHub/OpenGL/src/main.cpp" "CMakeFiles/HelloGL.dir/src/main.cpp.o" "gcc" "CMakeFiles/HelloGL.dir/src/main.cpp.o.d"
+  "/Users/cp_cp/GitHub/OpenGL/src/model_loader.cpp" "CMakeFiles/HelloGL.dir/src/model_loader.cpp.o" "gcc" "CMakeFiles/HelloGL.dir/src/model_loader.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
