@@ -27,7 +27,7 @@ float lastFrame = 0.0f;
 // 模型变换参数
 glm::vec3 modelPos(0.0f, -10.0f, 0.0f);
 glm::vec3 modelRotation(0.0f, 0.0f, 0.0f);
-float modelScale = 0.6f;
+float modelScale = 1.6f;
 
 // 鼠标参数
 bool firstMouse = true;
@@ -122,18 +122,15 @@ int main()
     // 启用深度测试
     glEnable(GL_DEPTH_TEST);
 
-    // std::cout<<"Hello World!"<<std::endl;
+    Model model("/Users/cp_cp/GitHub/OpenGL/resources/bunny.obj");
 
-    // 加载模型和着色器
-    Model model("/Users/cp_cp/GitHub/OpenGL/resources/model.obj");
-    // Model model("'/Users/cp_cp/GitHub/OpenGL/模型下载/GN-005 高达_爱给网_aigei_com/KSG GvsG Next Plus - GN-005 Gundam Virtue - Ren.obj'");
     if (!model.isLoaded())
     {
         std::cerr << "Failed to load model from path: /Users/cp_cp/GitHub/OpenGL/resources/model.obj" << std::endl;
     }
 
     Shader shader("/Users/cp_cp/GitHub/OpenGL/shaders/vertex.glsl", "/Users/cp_cp/GitHub/OpenGL/shaders/fragment.glsl");
-    // 定义一个大的平面顶点数据
+
     float planeVertices[] = {
         // 位置          // 法线
         100.0f,
@@ -238,7 +235,7 @@ int main()
 
         // 清空屏幕
         // glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // 设置背景为白色
-        //设置为灰色
+        // 设置为灰色
         glClearColor(0.9f, 0.9f, 0.9f, 0.9f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
