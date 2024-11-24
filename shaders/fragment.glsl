@@ -3,11 +3,13 @@ out vec4 FragColor;
 
 in vec3 FragPos;
 in vec3 Normal;
+in vec3 VertexColor; // 从顶点着色器传递过来的颜色
 
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 uniform vec3 lightColor;
 uniform vec3 objectColor;
+uniform bool useObjectColor; // 新增的 uniform 变量
 
 void main()
 {
@@ -25,6 +27,11 @@ void main()
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     vec3 specular = specularStrength * spec * lightColor;
     
-    vec3 result = (ambient + diffuse + specular) * objectColor;
+    vec3 result; // 声明 result 变量
+    if (useObjectColor) {
+        result = (ambient + diffuse + specular) * objectColor; // 使用 objectColor
+    } else {
+        result = (ambient + diffuse + specular) * VertexColor; // 使用 VertexColor
+    }
     FragColor = vec4(result, 1.0);
 }

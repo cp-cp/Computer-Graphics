@@ -99,7 +99,7 @@ void loadTextures()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // 加载图像，创建纹理并生成 mipmaps
     int width, height, nrChannels;
-    unsigned char *data = stbi_load("path/to/your/texture.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("/Users/cp_cp/GitHub/OpenGL/模型下载/Skull_v3_L2.123c1407fc1e-ea5c-4cb9-9072-d28b8aba4c36/Skull.jpg", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -176,6 +176,9 @@ int main()
     // 法线属性
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+    // 颜色属性
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void *)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -228,14 +231,13 @@ int main()
         // 输入处理
         processInput(window);
 
-        // 清空屏幕
-        // glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // 设置背景为白色
         // 设置为灰色
         glClearColor(0.9f, 0.9f, 0.9f, 0.9f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // 使用着色器
         shader.use();
+        shader.setBool("useObjectColor", true);
 
         // 绑定纹理
         glActiveTexture(GL_TEXTURE0);
@@ -309,14 +311,14 @@ int main()
         shader.setMat4("projection", projection);
 
         // 在渲染循环中设置模型颜色
-        shader.setVec3("objectColor", 1.0f, 0.9f, 0.9f); 
-
-        // 绘制立方体
+        shader.setVec3("objectColor", 1.0f, 0.9f, 0.9f);
+        // 绘制模型
         model.draw(shader);
 
         // 绘制平面
         shader.use();
-        shader.setVec3("objectColor", 0.7f, 0.8f, 0.9f); // 设置为蓝色
+        // shader.setVec3("objectColor", 0.7f, 0.8f, 0.9f); 
+        shader.setBool("useObjectColor", false);
         glm::mat4 planeModel = glm::mat4(1.0f);
         shader.setMat4("model", planeModel);
         glBindVertexArray(planeVAO);
