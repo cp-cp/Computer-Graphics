@@ -13,6 +13,9 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 // 窗口宽高
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
@@ -27,7 +30,7 @@ float lastFrame = 0.0f;
 // 模型变换参数
 glm::vec3 modelPos(0.0f, -10.0f, 0.0f);
 glm::vec3 modelRotation(0.0f, 0.0f, 0.0f);
-float modelScale = 1.6f;
+float modelScale = 0.6f;
 
 // 鼠标参数
 bool firstMouse = true;
@@ -47,24 +50,25 @@ bool isInterpolating = false;
 // 添加舞蹈状态变量
 bool isDancing = false;
 
+// 全局变量
+unsigned int texture1, texture2;
+
 // 回调函数声明
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 void scrollCallback(GLFWwindow *window, double xoffset, double yoffset);
-void renderScene(const Shader &shader);
 
 void danceMovement(float time)
 {
     if (isDancing)
     {
-        // 使用正弦和余弦函数来创建复杂的舞蹈效果
         // 平移
         modelPos.x = 5.0f * sin(1.5f * time);          // X轴移动
         modelPos.y = -10.0f + 2.0f * sin(2.0f * time); // Y轴上下移动
         modelPos.z = 5.0f * cos(1.5f * time);          // Z轴移动
 
-        // 使用四元数进行旋转
+        // 使用���元数进行旋转
         glm::quat rotationX = glm::angleAxis(0.5f * sin(2.0f * time), glm::vec3(1.0f, 0.0f, 0.0f)); // 绕X轴旋转
         glm::quat rotationY = glm::angleAxis(0.5f * cos(2.0f * time), glm::vec3(0.0f, 1.0f, 0.0f)); // 绕Y轴旋转
         glm::quat rotationZ = glm::angleAxis(0.5f * sin(1.0f * time), glm::vec3(0.0f, 0.0f, 1.0f)); // 绕Z轴旋转
@@ -82,6 +86,32 @@ glm::quat createQuaternionFromEuler(const glm::vec3 &eulerAngles)
     return glm::quat(glm::vec3(eulerAngles)); // 根据欧拉角创建四元数
 }
 
+void loadTextures()
+{
+    // 生成纹理
+    glGenTextures(1, &texture1);
+    glBindTexture(GL_TEXTURE_2D, texture1);
+    // 设置纹理环绕方式
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // 设置纹理过滤方式
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // 加载图像，创建纹理并生成 mipmaps
+    int width, height, nrChannels;
+    unsigned char *data = stbi_load("path/to/your/texture.jpg", &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+}
+
 int main()
 {
     // 初始化 GLFW
@@ -89,22 +119,10 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
     GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "3D Model Viewer", nullptr, nullptr);
-    if (!window)
-    {
-        std::cerr << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
     glfwMakeContextCurrent(window);
 
-    // 初始化 GLAD
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cerr << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
+    gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
     // 设置 OpenGL 视口
     glViewport(0, 0, WIDTH, HEIGHT);
@@ -122,43 +140,17 @@ int main()
     // 启用深度测试
     glEnable(GL_DEPTH_TEST);
 
-    Model model("/Users/cp_cp/GitHub/OpenGL/resources/bunny.obj");
-
-    if (!model.isLoaded())
-    {
-        std::cerr << "Failed to load model from path: /Users/cp_cp/GitHub/OpenGL/resources/model.obj" << std::endl;
-    }
+    Model model("/Users/cp_cp/GitHub/OpenGL/resources/model.obj");
 
     Shader shader("/Users/cp_cp/GitHub/OpenGL/shaders/vertex.glsl", "/Users/cp_cp/GitHub/OpenGL/shaders/fragment.glsl");
 
     float planeVertices[] = {
         // 位置          // 法线
-        100.0f,
-        -10.0f,
-        100.0f,
-        0.0f,
-        1.0f,
-        0.0f,
-        -100.0f,
-        -10.0f,
-        100.0f,
-        0.0f,
-        1.0f,
-        0.0f,
-        -100.0f,
-        -10.0f,
-        -100.0f,
-        0.0f,
-        1.0f,
-        0.0f,
-        100.0f,
-        -10.0f,
-        -100.0f,
-        0.0f,
-        1.0f,
-        0.0f,
+        100.0f,-10.0f,100.0f,0.0f,1.0f,0.0f,
+        -100.0f,-10.0f,100.0f,0.0f,1.0f,0.0f,
+        -100.0f,-10.0f,-100.0f,0.0f,1.0f,0.0f,
+        100.0f,-10.0f,-100.0f,0.0f,1.0f,0.0f,
     };
-
     // 定义平面索引
     unsigned int planeIndices[] = {
         0, 1, 2,
@@ -197,7 +189,7 @@ int main()
     ImGui_ImplOpenGL3_Init("#version 330");
 
     // 设置 ImGui 样式
-    ImGui::StyleColorsDark(); // 使用深色主题
+    ImGui::StyleColorsClassic();
     // 自定义主题
     ImGuiStyle &style = ImGui::GetStyle();
     style.WindowRounding = 5.0f;        // 窗口圆角
@@ -222,10 +214,13 @@ int main()
     float interpolationFactor = 0.0f;        // 插值因子
     bool isInterpolating = false;            // 是否正在插值
 
+    // 加载纹理
+    loadTextures();
+
     // 渲染循环
     while (!glfwWindowShouldClose(window))
     {
-        // 每帧时间逻辑
+        // 每帧刷新逻辑
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
@@ -242,11 +237,16 @@ int main()
         // 使用着色器
         shader.use();
 
+        // 绑定纹理
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture1);
+        shader.setInt("texture1", 0);
+
         // 设置光源属性
         shader.setVec3("lightPos", lightPos.x, lightPos.y, lightPos.z);   // 光源位置
         shader.setVec3("viewPos", cameraPos.x, cameraPos.y, cameraPos.z); // 观察者位置
         shader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);                   // 光源颜色
-        shader.setVec3("objectColor", 1.0f, 0.5f, 0.2f);                  // 物体颜色
+        // shader.setVec3("objectColor", 1.0f, 0.9f, 0.9f);                  // 设置物体表面颜色为灰色
 
         // 启动新的 ImGui 帧
         ImGui_ImplOpenGL3_NewFrame();
@@ -309,13 +309,14 @@ int main()
         shader.setMat4("projection", projection);
 
         // 在渲染循环中设置模型颜色
-        shader.setVec3("objectColor", 1.0f, 0.9f, 0.9f); // 设置为橙色
+        shader.setVec3("objectColor", 1.0f, 0.9f, 0.9f); 
 
         // 绘制立方体
         model.draw(shader);
 
         // 绘制平面
         shader.use();
+        shader.setVec3("objectColor", 0.7f, 0.8f, 0.9f); // 设置为蓝色
         glm::mat4 planeModel = glm::mat4(1.0f);
         shader.setMat4("model", planeModel);
         glBindVertexArray(planeVAO);
@@ -439,15 +440,6 @@ void processInput(GLFWwindow *window)
 
 void mouseCallback(GLFWwindow *window, double xpos, double ypos)
 {
-    // static float lastX = xpos, lastY = ypos;
-    // float xoffset = xpos - lastX;
-    // float yoffset = lastY - ypos;
-    // lastX = xpos;
-    // lastY = ypos;
-
-    // float sensitivity = 0.1f;                 // 调整灵敏度
-    // modelRotation.y += xoffset * sensitivity; // 绕 Y 轴旋转
-    // modelRotation.x += yoffset * sensitivity; // 绕 X 轴旋转
 }
 
 void scrollCallback(GLFWwindow *window, double xoffset, double yoffset)
@@ -455,10 +447,4 @@ void scrollCallback(GLFWwindow *window, double xoffset, double yoffset)
     // modelScale += yoffset * 0.1f; // 根据滚轮滚动调整缩放
     // if (modelScale < 0.1f)
     //     modelScale = 0.1f; // 限制最小缩放值
-}
-
-void renderScene(const Shader &shader)
-{
-    // 渲染场景的代码
-    // 这里你可以添加绘制模型或其他物体的代码
 }
