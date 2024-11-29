@@ -307,6 +307,9 @@ DART_TESTING_TIMEOUT:STRING=1500
 //Path to a program.
 GITCOMMAND:FILEPATH=/usr/bin/git
 
+//Path to a library.
+GLUT_LIBRARY:FILEPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk/System/Library/Frameworks/glut.framework
+
 //Value Computed by CMake
 HelloGL_BINARY_DIR:STATIC=/Users/cp_cp/GitHub/OpenGL/build
 

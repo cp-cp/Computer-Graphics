@@ -24,6 +24,11 @@ find_package(glm REQUIRED)
 # 查找 Assimp
 find_package(ASSIMP REQUIRED)
 
+
+find_library(GLUT_LIBRARY NAMES glut PATHS /usr/local/lib /usr/lib /opt/homebrew/lib)  # 手动查找 GLUT 库
+include_directories(/usr/local/include)  # 包含 GLUT 头文件
+
+
 set(IMGUI_DIR ${PROJECT_SOURCE_DIR}/imgui)
 
 
@@ -43,7 +48,7 @@ if (APPLE)
 endif()
 
 # 链接 GLFW, GLM 和 Assimp
-target_link_libraries(HelloGL glfw ${GLM_LIBRARIES} ${ASSIMP_LIBRARIES} stb_image imgui_impl_opengl3 imgui_impl_glfw imgui)
+target_link_libraries(HelloGL glfw ${GLM_LIBRARIES} ${ASSIMP_LIBRARIES} ${GLUT_LIBRARY} stb_image imgui_impl_opengl3 imgui_impl_glfw imgui)
 
 include(CTest)
 enable_testing()

@@ -4,7 +4,7 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/cp_cp/GitHub/OpenGL/include -I/Users/cp_cp/GitHub/OpenGL/lib -I/Users/cp_cp/GitHub/OpenGL/path/to/stb_image
+CXX_INCLUDES = -I/Users/cp_cp/GitHub/OpenGL/include -I/Users/cp_cp/GitHub/OpenGL/lib -I/Users/cp_cp/GitHub/OpenGL/path/to/stb_image -I/usr/local/include
 
 CXX_FLAGSarm64 = -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
 

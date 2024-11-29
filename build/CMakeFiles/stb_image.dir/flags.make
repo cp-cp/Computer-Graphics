@@ -4,7 +4,7 @@
 # compile C with /Library/Developer/CommandLineTools/usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/Users/cp_cp/GitHub/OpenGL/include -I/Users/cp_cp/GitHub/OpenGL/lib -I/Users/cp_cp/GitHub/OpenGL/path/to/stb_image
+C_INCLUDES = -I/Users/cp_cp/GitHub/OpenGL/include -I/Users/cp_cp/GitHub/OpenGL/lib -I/Users/cp_cp/GitHub/OpenGL/path/to/stb_image -I/usr/local/include
 
 C_FLAGSarm64 =  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
 
