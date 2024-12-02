@@ -31,8 +31,7 @@ struct Vector3
         float len = std::sqrt(dot(*this));
         return (*this) / len;
     }
-    Vector3 operator^(const Vector3 &v) const
-    {
+    Vector3 operator^(const Vector3 &v) const {
         return Vector3(y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);
     }
 };
@@ -94,15 +93,37 @@ struct Sphere
     }
 };
 
+void renderScene(); // 前向声明
+
+float cameraAngleY = 0.0f; // 摄像机旋转角度
+
+// 更新摄像机位置
+Vector3 updateCameraPosition()
+{
+    return Vector3(std::cos(cameraAngleY) * 5, 1, std::sin(cameraAngleY) * 5);
+}
+// 处理键盘输入
+void keyboard(unsigned char key, int x, int y)
+{
+    if (key == 'a')
+        cameraAngleY -= 0.1f;
+    else if (key == 'd')
+        cameraAngleY += 0.1f;
+
+    renderScene();
+    glutPostRedisplay();
+}
+
 // 渲染场景
 void renderScene()
 {
-    // 固定相机位置和方向
-    Vector3 camera(0, 3, 16);       // 相机位于房间上方并向下倾斜
-    Vector3 cameraLookAt(0, 1, 0); // 摄像机看向房间中心
-    Vector3 cameraDirection = (cameraLookAt - camera).normalize();
+    Vector3 camera = updateCameraPosition();                                   // 更新摄像机位置
+    Vector3 cameraLookAt(0, 1, 0);                                             // 摄像机看向固定点（房间中心）
+    Vector3 cameraDirection = (cameraLookAt - camera).normalize();             // 计算摄像机方向
     Vector3 cameraRight = Vector3(0, 1, 0) ^ cameraDirection; // 摄像机右向量
     Vector3 cameraUp = cameraDirection ^ cameraRight;         // 摄像机上向量
+
+    Vector3 lightPos(-5, 5, 5);
 
     Sphere redSphere(Vector3(-1.5, 0.5, -5), 0.5, Color(1, 0, 0));
     Sphere blueSphere(Vector3(1.5, 0.5, -5), 0.5, Color(0, 0, 1));
@@ -117,9 +138,11 @@ void renderScene()
     {
         for (int x = 0; x < WIDTH; ++x)
         {
+            // 屏幕空间坐标 [-1, 1]
             float u = (x + 0.5f) / WIDTH * 2 - 1;
             float v = (y + 0.5f) / HEIGHT * 2 - 1;
 
+            // 计算射线方向（结合摄像机的旋转）
             Vector3 rayDir = (cameraDirection + cameraRight * u + cameraUp * v).normalize();
             Ray ray(camera, rayDir);
 
@@ -127,19 +150,33 @@ void renderScene()
             Color pixelColor(0.2f, 0.2f, 0.2f); // 默认背景色
 
             if (redSphere.intersect(ray, t))
+            {
                 pixelColor = redSphere.color;
+            }
             if (blueSphere.intersect(ray, t))
+            {
                 pixelColor = blueSphere.color;
+            }
             if (ground.intersect(ray, t))
+            {
                 pixelColor = ground.color;
+            }
             if (ceiling.intersect(ray, t))
+            {
                 pixelColor = ceiling.color;
+            }
             if (backWall.intersect(ray, t))
+            {
                 pixelColor = backWall.color;
+            }
             if (leftWall.intersect(ray, t))
+            {
                 pixelColor = leftWall.color;
+            }
             if (rightWall.intersect(ray, t))
+            {
                 pixelColor = rightWall.color;
+            }
 
             framebuffer[y * WIDTH + x] = pixelColor;
         }
@@ -159,10 +196,11 @@ int main(int argc, char **argv)
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
     glutInitWindowSize(WIDTH, HEIGHT);
-    glutCreateWindow("Fixed Overhead View");
+    glutCreateWindow("Ray Tracing Room");
 
     renderScene();
     glutDisplayFunc(display);
+    glutKeyboardFunc(keyboard);
     glutMainLoop();
     return 0;
 }
