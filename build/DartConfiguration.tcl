@@ -27,7 +27,7 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "/opt/homebrew/Cellar/cmake/3.30.3/bin/cmake" "/Users/cp_cp/GitHub/OpenGL"
+ConfigureCommand: "/opt/homebrew/bin/cmake" "/Users/cp_cp/GitHub/OpenGL"
 MakeCommand: /opt/homebrew/Cellar/cmake/3.30.3/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}" -- -i
 DefaultCTestConfigurationType: Release
 
@@ -64,7 +64,7 @@ UpdateType: git
 
 # Compiler info
 Compiler: /Library/Developer/CommandLineTools/usr/bin/c++
-CompilerVersion: 15.0.0.15000309
+CompilerVersion: 16.0.0.16000026
 
 # Dynamic analysis (MemCheck)
 PurifyCommand: 
