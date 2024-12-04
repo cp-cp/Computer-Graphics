@@ -13,9 +13,6 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
 // 窗口宽高
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
@@ -68,7 +65,7 @@ void danceMovement(float time)
         modelPos.y = -10.0f + 2.0f * sin(2.0f * time); // Y轴上下移动
         modelPos.z = 5.0f * cos(1.5f * time);          // Z轴移动
 
-        // 使用���元数进行旋转
+        // 使用元数进行旋转
         glm::quat rotationX = glm::angleAxis(0.5f * sin(2.0f * time), glm::vec3(1.0f, 0.0f, 0.0f)); // 绕X轴旋转
         glm::quat rotationY = glm::angleAxis(0.5f * cos(2.0f * time), glm::vec3(0.0f, 1.0f, 0.0f)); // 绕Y轴旋转
         glm::quat rotationZ = glm::angleAxis(0.5f * sin(1.0f * time), glm::vec3(0.0f, 0.0f, 1.0f)); // 绕Z轴旋转
@@ -99,7 +96,7 @@ void loadTextures()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // 加载图像，创建纹理并生成 mipmaps
     int width, height, nrChannels;
-    unsigned char *data = stbi_load("/Users/cp_cp/GitHub/OpenGL/模型下载/Skull_v3_L2.123c1407fc1e-ea5c-4cb9-9072-d28b8aba4c36/Skull.jpg", &width, &height, &nrChannels, 0);
+    unsigned char *data = stbi_load("/Users/cp_cp/GitHub/OpenGL/resources/Skull.jpg", &width, &height, &nrChannels, 0);
     if (data)
     {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -140,7 +137,8 @@ int main()
     // 启用深度测试
     glEnable(GL_DEPTH_TEST);
 
-    Model model("/Users/cp_cp/GitHub/OpenGL/resources/model.obj");
+    // Model model("/Users/cp_cp/GitHub/OpenGL/resources/model.obj");
+    Model model("/Users/cp_cp/GitHub/OpenGL/resources/12140_Skull_v3_L2.obj");
 
     Shader shader("/Users/cp_cp/GitHub/OpenGL/shaders/vertex.glsl", "/Users/cp_cp/GitHub/OpenGL/shaders/fragment.glsl");
 

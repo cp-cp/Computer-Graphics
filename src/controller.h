@@ -8,28 +8,30 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // 摄像机参数
-extern glm::vec3 cameraPos(0.0f, 3.0f, 30.0f);
-extern glm::vec3 cameraFront(0.0f, -0.3f, -1.0f);
-extern glm::vec3 cameraUp(0.0f, 1.0f, 0.0f);
+extern glm::vec3 cameraPos;
+extern glm::vec3 cameraFront;
+extern glm::vec3 cameraUp;
 
 // 模型变换参数
-extern glm::vec3 modelPos(0.0f, -10.0f, 0.0f);
-extern glm::vec3 modelRotation(0.0f, 0.0f, 0.0f);
-extern float modelScale = 1.6f;
+extern glm::vec3 modelPos;
+extern glm::vec3 modelRotation;
+extern float modelScale;
 
 // 添加舞蹈状态变量
-extern bool isDancing = false;
+extern bool isDancing;
 
 // 定义插值参数
-extern float interpolationFactor = 0.0f;
-extern bool isInterpolating = false;
+extern float interpolationFactor;
+extern bool isInterpolating;
 
+// 回调函数声明
 void framebufferSizeCallback(GLFWwindow *window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouseCallback(GLFWwindow *window, double xpos, double ypos);
 void scrollCallback(GLFWwindow *window, double xoffset, double yoffset);
 
-float deltaTime = 0.0f;
-float lastFrame = 0.0f;
+// 时间相关
+extern float deltaTime;
+extern float lastFrame;
 
 #endif // CONTROLLER_H

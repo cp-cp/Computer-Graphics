@@ -1,3 +1,6 @@
+// #define STB_IMAGE_IMPLEMENTATION
+// #include "stb_image.h"
+
 #include "model_loader.h"
 
 Model::Model(const std::string &filepath)
@@ -91,6 +94,14 @@ Model::Mesh Model::processMesh(aiMesh *mesh, const aiScene *scene)
             indices.push_back(face.mIndices[j]);
     }
 
+    if(mesh->mMaterialIndex >= 0)
+    {
+        aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
+        std::vector<Texture> diffuseMaps = loadMaterialTextures(material, 
+            aiTextureType_DIFFUSE, "texture_diffuse");
+        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+    }
+
     return Mesh(vertices, indices, textures);
 }
 
@@ -102,9 +113,35 @@ Model::Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indice
 
 void Model::Mesh::draw(const Shader &shader)
 {
+    // 绑定适当的纹理
+    unsigned int diffuseNr = 1;
+    unsigned int specularNr = 1;
+    for(unsigned int i = 0; i < textures.size(); i++)
+    {
+        glActiveTexture(GL_TEXTURE0 + i); // 激活纹理单元
+        std::string number;
+        std::string name = textures[i].type;
+        if(name == "texture_diffuse")
+            number = std::to_string(diffuseNr++); // diffuse_texture1, diffuse_texture2, ...
+        else if(name == "texture_specular")
+            number = std::to_string(specularNr++); // specular_texture1, specular_texture2, ...
+
+        // 设置着色器中的Uniform变量
+        shader.setInt((name + number).c_str(), i);
+        // 绑定纹理
+        glBindTexture(GL_TEXTURE_2D, textures[i].id);
+    }
+
+    // 设置是否使用纹理
+    shader.setBool("useTexture", textures.size() > 0);
+
+    // 绘制网格
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
+    
+    // 重置激活的纹理单元
+    glActiveTexture(GL_TEXTURE0);
 }
 
 void Model::Mesh::setupMesh()
@@ -128,4 +165,60 @@ void Model::Mesh::setupMesh()
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, TexCoords));
 
     glBindVertexArray(0);
+}
+
+unsigned int Model::TextureFromFile(const char *path, const std::string &directory)
+{
+    std::string filename = std::string(path);
+    filename = directory + '/' + filename;
+
+    unsigned int textureID;
+    glGenTextures(1, &textureID);
+
+    int width, height, nrComponents;
+    unsigned char *data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
+    if (data)
+    {
+        GLenum format;
+        if (nrComponents == 1)
+            format = GL_RED;
+        else if (nrComponents == 3)
+            format = GL_RGB;
+        else if (nrComponents == 4)
+            format = GL_RGBA;
+
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        stbi_image_free(data);
+    }
+    else
+    {
+        std::cout << "Texture failed to load at path: " << path << std::endl;
+        stbi_image_free(data);
+    }
+
+    return textureID;
+}
+
+std::vector<Model::Texture> Model::loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+{
+    std::vector<Texture> textures;
+    for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+    {
+        aiString str;
+        mat->GetTexture(type, i, &str);
+        Texture texture;
+        texture.id = TextureFromFile(str.C_Str(), directory);
+        texture.type = typeName;
+        texture.path = str.C_Str();
+        textures.push_back(texture);
+    }
+    return textures;
 }
