@@ -174,9 +174,6 @@ int main()
     // 法线属性
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-    // 颜色属性
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void *)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -315,8 +312,8 @@ int main()
 
         // 绘制平面
         shader.use();
-        // shader.setVec3("objectColor", 0.7f, 0.8f, 0.9f); 
-        shader.setBool("useObjectColor", false);
+        shader.setBool("useObjectColor", true); // 使用对象颜色而不是纹理
+        shader.setVec3("objectColor", 0.7f, 0.8f, 0.9f); // 设置平面的颜色
         glm::mat4 planeModel = glm::mat4(1.0f);
         shader.setMat4("model", planeModel);
         glBindVertexArray(planeVAO);
