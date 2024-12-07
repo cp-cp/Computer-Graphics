@@ -25,9 +25,9 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 // 模型变换参数
-glm::vec3 modelPos(0.0f, -10.0f, 0.0f);
-glm::vec3 modelRotation(0.0f, 0.0f, 0.0f);
-float modelScale = 0.6f;
+glm::vec3 modelPos(0.0f, -5.0f, 0.0f);
+glm::vec3 modelRotation(-1.5f, 0.0f, 0.0f);
+float modelScale = 0.3f;
 
 // 鼠标参数
 bool firstMouse = true;
@@ -62,19 +62,19 @@ void danceMovement(float time)
     {
         // 平移
         modelPos.x = 5.0f * sin(1.5f * time);          // X轴移动
-        modelPos.y = -10.0f + 2.0f * sin(2.0f * time); // Y轴上下移动
+        modelPos.y = 0.0f + 2.0f * sin(2.0f * time); // Y轴上下移动
         modelPos.z = 5.0f * cos(1.5f * time);          // Z轴移动
 
         // 使用元数进行旋转
-        glm::quat rotationX = glm::angleAxis(0.5f * sin(2.0f * time), glm::vec3(1.0f, 0.0f, 0.0f)); // 绕X轴旋转
-        glm::quat rotationY = glm::angleAxis(0.5f * cos(2.0f * time), glm::vec3(0.0f, 1.0f, 0.0f)); // 绕Y轴旋转
-        glm::quat rotationZ = glm::angleAxis(0.5f * sin(1.0f * time), glm::vec3(0.0f, 0.0f, 1.0f)); // 绕Z轴旋转
+        glm::quat rotationX = glm::angleAxis(-0.05f * sin(1.0f * time), glm::vec3(1.0f, 0.0f, 0.0f)); // 绕X轴旋转
+        glm::quat rotationY = glm::angleAxis(-0.05f * cos(1.0f * time), glm::vec3(0.0f, 1.0f, 0.0f)); // 绕Y轴旋转
+        glm::quat rotationZ = glm::angleAxis(-0.05f * sin(1.0f * time), glm::vec3(0.0f, 0.0f, 1.0f)); // 绕Z轴旋转
 
         // 组合旋转
         modelRotation = rotationZ * rotationY * rotationX * modelRotation; // 更新模型旋转
 
         // 缩放变化
-        modelScale = 0.6f + 0.1f * sin(1.0f * time); // 根据时间变化缩放
+        modelScale = 0.3 - 0.1f * sin(1.0f * time); // 根据时间变化缩放
     }
 }
 // 封装四元数旋转的函数
@@ -187,22 +187,31 @@ int main()
     ImGui_ImplOpenGL3_Init("#version 330");
 
     // 设置 ImGui 样式
-    ImGui::StyleColorsClassic();
+    ImGui::StyleColorsDark(); // 使用深色主题
+
     // 自定义主题
     ImGuiStyle &style = ImGui::GetStyle();
-    style.WindowRounding = 5.0f;        // 窗口圆角
-    style.FrameRounding = 5.0f;         // 控件圆角
-    style.GrabRounding = 5.0f;          // 拖动条圆角
-    style.ItemSpacing = ImVec2(10, 10); // 控件间距
-    style.FramePadding = ImVec2(5, 5);  // 控件内边距
+    style.WindowRounding = 10.0f;        // 窗口圆角
+    style.FrameRounding = 10.0f;         // 控件圆角
+    style.GrabRounding = 10.0f;          // 拖动条圆角
+    style.ItemSpacing = ImVec2(12, 12);  // 控件间距
+    style.FramePadding = ImVec2(8, 8);   // 控件内边距
 
     // 自定义颜色
-    style.Colors[ImGuiCol_WindowBg] = ImVec4(0.1f, 0.1f, 0.1f, 1.0f);      // 窗口背景色
-    style.Colors[ImGuiCol_TitleBg] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);       // 标题背景色
-    style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f); // 活动标题背景色
-    style.Colors[ImGuiCol_Button] = ImVec4(0.4f, 0.4f, 0.4f, 1.0f);        // 按钮背景色
-    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.5f, 0.5f, 0.5f, 1.0f); // 悬停按钮背景色
-    style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.6f, 0.6f, 0.6f, 1.0f);  // 激活按钮背景色
+    style.Colors[ImGuiCol_WindowBg] = ImVec4(0.15f, 0.15f, 0.15f, 1.0f);         // 窗口背景色
+    style.Colors[ImGuiCol_TitleBg] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);             // 标题背景色
+    style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.3f, 0.3f, 0.3f, 1.0f);       // 活动标题背景色
+    style.Colors[ImGuiCol_Button] = ImVec4(0.45f, 0.55f, 0.60f, 1.0f);            // 按钮背景色
+    style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.55f, 0.65f, 0.70f, 1.0f);     // 悬停按钮背景色
+    style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.65f, 0.75f, 0.80f, 1.0f);      // 激活按钮背景色
+    style.Colors[ImGuiCol_Header] = ImVec4(0.45f, 0.55f, 0.60f, 1.0f);            // 头部色
+    style.Colors[ImGuiCol_HeaderHovered] = ImVec4(0.55f, 0.65f, 0.70f, 1.0f);     // 悬停头部色
+    style.Colors[ImGuiCol_HeaderActive] = ImVec4(0.65f, 0.75f, 0.80f, 1.0f);      // 激活头部色
+    style.Colors[ImGuiCol_CheckMark] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);           // 选中标记色
+    style.Colors[ImGuiCol_SliderGrab] = ImVec4(0.55f, 0.65f, 0.70f, 1.0f);       // 滑块抓取色
+    style.Colors[ImGuiCol_SliderGrabActive] = ImVec4(0.75f, 0.85f, 0.90f, 1.0f); // 激活滑块抓取色
+    style.Colors[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);                 // 文本颜色
+    style.Colors[ImGuiCol_Separator] = ImVec4(0.2f, 0.2f, 0.2f, 1.0f);           // 分割线颜色
 
     // 定义前后位置变量
     glm::vec3 newPosition(0.0f, 0.0f, 0.0f);
@@ -252,12 +261,12 @@ int main()
 
         // 创建一个窗口并固定位置
         ImGui::SetNextWindowPos(ImVec2(0, height * 0.3), ImGuiCond_Always);                                                         // 固定窗口位置
-        ImGui::SetNextWindowSize(ImVec2(width, height * 0.2), ImGuiCond_Always);                                                    // 设置窗口大小
+        ImGui::SetNextWindowSize(ImVec2(width*0.5, height * 0.2), ImGuiCond_Always);                                                    // 设置窗口大小
         ImGui::Begin("Position Input", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse); // 禁用移动、调整大小和折叠
 
         ImGui::InputFloat3("New Position", &newPosition[0]); // 输入新的位置
         ImGui::Text("Model Position: (%.2f, %.2f, %.2f)", modelPos.x, modelPos.y, modelPos.z);
-        ImGui::InputFloat3("New Rotation", &newRotation[0]); // 输入新的旋转
+        ImGui::InputFloat3("New Rotation", &newRotation[0]); // 输��新的旋转
         ImGui::Text("Model Front Direction: (%.2f, %.2f, %.2f)", modelRotation.x, modelRotation.y, modelRotation.z);
 
         // 计算按钮宽度并居中
@@ -354,13 +363,13 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     float modelMoveSpeed = 0.1;
-    float rotateSpeed = 0.2;
+    float rotateSpeed = 0.1;
     // 添加模型复位逻辑
     if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
     {                                                // 按下 R 键复位模型
-        modelPos = glm::vec3(0.0f, -10.0f, 0.0f);    // 复位模型位置
-        modelRotation = glm::vec3(0.0f, 0.0f, 0.0f); // 复位模型旋转
-        modelScale = 0.6f;                           // 复位模型缩放
+        modelPos = glm::vec3(0.0f, -5.0f, 0.0f);    // 复位模型位置
+        modelRotation = glm::vec3(-1.5f, 0.0f, 0.0f); // 复位模型旋转
+        modelScale = 0.3f;                           // 复位模型缩放
     }
     // 添加相机复位逻辑
     if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
@@ -417,9 +426,9 @@ void processInput(GLFWwindow *window)
             modelPos.x += modelMoveSpeed;
     }
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) // 放大模型
-        modelScale += 0.01;
+        modelScale += 0.005;
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) // 缩小模型
-        modelScale -= 0.01;
+        modelScale -= 0.005;
 
     // 开始插值
     if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
