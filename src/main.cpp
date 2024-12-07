@@ -22,7 +22,7 @@ struct Color
         return *this;
     }
 };
-std::vector<Color> framebuffer(WIDTH *HEIGHT);
+std::vector<Color> framebuffer(WIDTH * HEIGHT);
 
 // 定义基础向量类
 struct Vector3
@@ -120,29 +120,75 @@ struct Sphere
     }
 };
 
-// Phong光照模型
-Color phongShading(const Vector3 &point, const Vector3 &normal, const Vector3 &lightPos, const Color &objectColor)
+// 全局相机和光源位置
+Vector3 cameraPosition(0, 8, 12);
+Vector3 cameraLookAt(0, 1, -5);
+Vector3 lightPosition(-5, 5, 5);
+
+// Phong���照模型
+Color phongShading(const Vector3 &point, const Vector3 &normal, const Vector3 &lightPos, const Color &objectColor, bool inShadow)
 {
-    Vector3 lightDir = (lightPos - point).normalize();
-    Vector3 viewDir = (Vector3(0, 8, 12) - point).normalize();
-    Vector3 reflectDir = (normal * 2 * normal.dot(lightDir) - lightDir).normalize();
+    if (inShadow)
+    {
+        // 只考虑环境光
+        float ambientStrength = 0.2f;
+        return objectColor * ambientStrength;
+    }
+    else
+    {
+        Vector3 lightDir = (lightPos - point).normalize();
+        Vector3 viewDir = (cameraPosition - point).normalize();
+        Vector3 reflectDir = (normal * 2 * normal.dot(lightDir) - lightDir).normalize();
 
-    float ambientStrength = 0.1f;
-    float diffuseStrength = 0.7f;
-    float specularStrength = 0.2f;
-    int shininess = 32;
+        float ambientStrength = 0.1f;
+        float diffuseStrength = 0.7f;
+        float specularStrength = 0.2f;
+        int shininess = 32;
 
-    Color ambient = objectColor * ambientStrength;
-    float diff = std::max(0.0f, normal.dot(lightDir));
-    Color diffuse = objectColor * (diff * diffuseStrength);
-    float spec = std::pow(std::max(0.0f, viewDir.dot(reflectDir)), shininess);
-    Color specular = Color(1, 1, 1) * (spec * specularStrength);
+        Color ambient = objectColor * ambientStrength;
+        float diff = std::max(0.0f, normal.dot(lightDir));
+        Color diffuse = objectColor * (diff * diffuseStrength);
+        float spec = std::pow(std::max(0.0f, viewDir.dot(reflectDir)), shininess);
+        Color specular = Color(1, 1, 1) * (spec * specularStrength);
 
-    return ambient + diffuse + specular;
+        return ambient + diffuse + specular;
+    }
+}
+
+// 检查点是否在阴影中
+bool isInShadow(const Vector3 &point, const Vector3 &lightPos, const std::vector<Sphere> &spheres, const std::vector<Rectangle> &rectangles)
+{
+    Vector3 shadowDir = (lightPos - point).normalize();
+    Ray shadowRay(point + shadowDir * 1e-4f, shadowDir);
+    float tMax = (lightPos - point).dot(lightPos - point);
+    
+    // 检查球体
+    for (const auto &sphere : spheres)
+    {
+        float t = std::sqrt(tMax);
+        Vector3 hitPoint, hitNormal;
+        if (sphere.intersect(shadowRay, t, hitPoint, hitNormal))
+        {
+            return true;
+        }
+    }
+
+    // 检查墙壁
+    for (const auto &rect : rectangles)
+    {
+        float t = std::sqrt(tMax);
+        Vector3 hitPoint, hitNormal;
+        if (rect.intersect(shadowRay, t, hitPoint, hitNormal))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 // 光线追踪
-Color traceRay(const Ray &ray, const std::vector<Sphere> &spheres, const std::vector<Rectangle> &rectangles, const Vector3 &lightPos, int depth = 3)
+Color traceRay(const Ray &ray, const std::vector<Sphere> &spheres, const std::vector<Rectangle> &rectangles, int depth = 20)
 {
     if (depth <= 0)
         return Color(0.2f, 0.2f, 0.2f);
@@ -150,28 +196,39 @@ Color traceRay(const Ray &ray, const std::vector<Sphere> &spheres, const std::ve
     float t = std::numeric_limits<float>::max();
     Color hitColor(0.2f, 0.2f, 0.2f);
     Vector3 hitPoint, hitNormal;
+    bool hit = false;
+    Color objectColor;
 
+    // 检查所有球体
     for (const auto &sphere : spheres)
     {
         if (sphere.intersect(ray, t, hitPoint, hitNormal))
         {
-            hitColor = phongShading(hitPoint, hitNormal, lightPos, sphere.color);
+            hit = true;
+            objectColor = sphere.color;
         }
     }
 
+    // 检查所有墙壁
     for (const auto &rect : rectangles)
     {
         if (rect.intersect(ray, t, hitPoint, hitNormal))
         {
-            hitColor = phongShading(hitPoint, hitNormal, lightPos, rect.color);
+            hit = true;
+            objectColor = rect.color;
         }
     }
 
-    if (hitColor.r != 0.2f || hitColor.g != 0.2f || hitColor.b != 0.2f)
+    if (hit)
     {
+        // 检查阴影
+        bool inShadow = isInShadow(hitPoint, lightPosition, spheres, rectangles);
+        hitColor = phongShading(hitPoint, hitNormal, lightPosition, objectColor, inShadow);
+
+        // 反射
         Vector3 reflectDir = (ray.direction - hitNormal * 2 * ray.direction.dot(hitNormal)).normalize();
         Ray reflectRay(hitPoint + reflectDir * 1e-4f, reflectDir);
-        Color reflectColor = traceRay(reflectRay, spheres, rectangles, lightPos, depth - 1);
+        Color reflectColor = traceRay(reflectRay, spheres, rectangles, depth - 1);
         hitColor = hitColor * 0.8f + reflectColor * 0.2f;
     }
 
@@ -181,19 +238,29 @@ Color traceRay(const Ray &ray, const std::vector<Sphere> &spheres, const std::ve
 // 渲染场景
 void renderScene()
 {
-    Vector3 camera(0, 8, 12);
-    Vector3 cameraLookAt(0, 1, -5);
-    Vector3 cameraDirection = (cameraLookAt - camera).normalize();
+    Vector3 cameraDirection = (cameraLookAt - cameraPosition).normalize();
     Vector3 cameraRight = Vector3(0, 1, 0) ^ cameraDirection;
     Vector3 cameraUp = cameraDirection ^ cameraRight;
-
-    Vector3 lightPos(-5, 5, 5);
 
     std::vector<Sphere> spheres = {
         Sphere(Vector3(-1.5, 0.5, -5), 0.5, Color(1, 0, 0)),
         Sphere(Vector3(1.5, 0.5, -5), 0.5, Color(0, 0, 1))};
+    
+    // 墙壁颜色统一
+    Color wallColor(0.7f, 0.7f, 0.7f);
+    
     std::vector<Rectangle> rectangles = {
-        Rectangle(Vector3(0, 0, -5), Vector3(0, 1, 0), Vector3(1, 0, 0), 10, 10, Color(0.5, 0.3, 0.1))};
+        // 地板
+        Rectangle(Vector3(0, 0, -5), Vector3(0, 1, 0), Vector3(1, 0, 0), 10, 10, Color(0.5, 0.3, 0.1)),
+        // 后墙
+        Rectangle(Vector3(0, 5, -10), Vector3(0, 0, 1), Vector3(0, 1, 0), 10, 10, wallColor),
+        // 左墙
+        Rectangle(Vector3(-5, 5, -5), Vector3(1, 0, 0), Vector3(0, 1, 0), 10, 10, wallColor),
+        // 右墙
+        Rectangle(Vector3(5, 5, -5), Vector3(-1, 0, 0), Vector3(0, 1, 0), 10, 10, wallColor),
+        // 天顶
+        Rectangle(Vector3(0, 10, -5), Vector3(0, -1, 0), Vector3(1, 0, 0), 10, 10, wallColor)
+    };
 
     for (int y = 0; y < HEIGHT; ++y)
     {
@@ -203,9 +270,9 @@ void renderScene()
             float v = (y + 0.5f) / HEIGHT * 2 - 1;
 
             Vector3 rayDir = (cameraDirection + cameraRight * u + cameraUp * v).normalize();
-            Ray ray(camera, rayDir);
+            Ray ray(cameraPosition, rayDir);
 
-            framebuffer[y * WIDTH + x] = traceRay(ray, spheres, rectangles, lightPos);
+            framebuffer[y * WIDTH + x] = traceRay(ray, spheres, rectangles);
         }
     }
 }
@@ -218,17 +285,67 @@ void display()
     glutSwapBuffers();
 }
 
+// 键盘回调函数
+void handleKeypress(unsigned char key, int x, int y)
+{
+    float moveStep = 0.5f;
+    switch (key)
+    {
+    case 'w':
+        cameraPosition.z -= moveStep;
+        cameraLookAt.z -= moveStep;
+        break;
+    case 's':
+        cameraPosition.z += moveStep;
+        cameraLookAt.z += moveStep;
+        break;
+    case 'a':
+        cameraPosition.x -= moveStep;
+        cameraLookAt.x -= moveStep;
+        break;
+    case 'd':
+        cameraPosition.x += moveStep;
+        cameraLookAt.x += moveStep;
+        break;
+    case 'i':
+        lightPosition.y += moveStep;
+        break;
+    case 'k':
+        lightPosition.y -= moveStep;
+        break;
+    case 'j':
+        lightPosition.x -= moveStep;
+        break;
+    case 'l':
+        lightPosition.x += moveStep;
+        break;
+    case 'u':
+        lightPosition.z += moveStep;
+        break;
+    case 'o':
+        lightPosition.z -= moveStep;
+        break;
+    case 27: // ESC键退出
+        exit(0);
+    default:
+        break;
+    }
+    renderScene();
+    glutPostRedisplay();
+}
+
 // 主函数
 int main(int argc, char **argv)
 {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
     glutInitWindowSize(WIDTH, HEIGHT);
-    glutCreateWindow("Ray Tracing");
+    glutCreateWindow("Ray Tracing with Shadows");
     glOrtho(0, WIDTH, 0, HEIGHT, -1, 1);
 
     renderScene();
     glutDisplayFunc(display);
+    glutKeyboardFunc(handleKeypress);
     glutMainLoop();
     return 0;
 }
